@@ -5,19 +5,16 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import urllib.error
 import urllib.request
 
 
-def call(url: str, payload: dict, token: str | None) -> dict:
+def call(url: str, payload: dict) -> dict:
     headers = {
         "Accept": "application/json, text/event-stream",
         "Content-Type": "application/json",
         "MCP-Protocol-Version": "2025-06-18",
     }
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(
         url,
         data=json.dumps(payload).encode("utf-8"),
@@ -31,7 +28,6 @@ def call(url: str, payload: dict, token: str | None) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("url", help="Full endpoint URL, for example https://example.vercel.app/api/mcp")
-    parser.add_argument("--token", default=os.environ.get("ALL_IN_GROK_TOKEN"))
     args = parser.parse_args()
     initialize = call(
         args.url,
@@ -41,7 +37,6 @@ def main() -> None:
             "method": "initialize",
             "params": {"protocolVersion": "2025-06-18", "capabilities": {}},
         },
-        args.token,
     )
     stats = call(
         args.url,
@@ -51,7 +46,6 @@ def main() -> None:
             "method": "tools/call",
             "params": {"name": "get_corpus_stats", "arguments": {}},
         },
-        args.token,
     )
     search = call(
         args.url,
@@ -61,7 +55,6 @@ def main() -> None:
             "method": "tools/call",
             "params": {"name": "search_transcripts", "arguments": {"query": "sovereign AI", "limit": 2}},
         },
-        args.token,
     )
     result = {
         "server": initialize["result"]["serverInfo"],

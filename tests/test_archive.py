@@ -6,7 +6,6 @@ import subprocess
 import sys
 import unittest
 from pathlib import Path
-from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,7 +13,7 @@ INDEX = ROOT / "data/all-in-grok.sqlite3"
 sys.path.insert(0, str(ROOT))
 
 from server.all_in_mcp import McpServer, TranscriptArchive, build_fts_query  # noqa: E402
-from api.mcp import authorized, valid_origin  # noqa: E402
+from api.mcp import valid_origin  # noqa: E402
 
 try:
     from fastapi.testclient import TestClient
@@ -114,20 +113,6 @@ class QueryTests(unittest.TestCase):
         self.assertTrue(valid_origin("http://localhost:3000"))
         self.assertFalse(valid_origin("https://attacker.example"))
 
-    def test_optional_http_bearer_token(self) -> None:
-        old_value = os.environ.get("ALL_IN_GROK_TOKEN")
-        try:
-            os.environ["ALL_IN_GROK_TOKEN"] = "test-secret"
-            self.assertTrue(authorized("Bearer test-secret"))
-            self.assertFalse(authorized("Bearer wrong"))
-            self.assertFalse(authorized(None))
-        finally:
-            if old_value is None:
-                os.environ.pop("ALL_IN_GROK_TOKEN", None)
-            else:
-                os.environ["ALL_IN_GROK_TOKEN"] = old_value
-
-
 @unittest.skipUnless(INDEX.is_file(), "private transcript index has not been built")
 class ProtocolTests(unittest.TestCase):
     def test_stdio_initialize_and_tool_call(self) -> None:
@@ -187,19 +172,12 @@ class HttpMcpTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["result"]["structuredContent"]["turns"], 102062)
 
-    def test_private_token(self) -> None:
-        with patch.dict(os.environ, {"ALL_IN_GROK_TOKEN": "private-test"}):
-            denied = self.client.post(
-                "/mcp",
-                json={"jsonrpc": "2.0", "id": 1, "method": "ping", "params": {}},
-            )
-            allowed = self.client.post(
-                "/mcp",
-                headers={"Authorization": "Bearer private-test"},
-                json={"jsonrpc": "2.0", "id": 2, "method": "ping", "params": {}},
-            )
-        self.assertEqual(denied.status_code, 401)
-        self.assertEqual(allowed.status_code, 200)
+    def test_public_request_needs_no_credentials(self) -> None:
+        response = self.client.post(
+            "/mcp",
+            json={"jsonrpc": "2.0", "id": 1, "method": "ping", "params": {}},
+        )
+        self.assertEqual(response.status_code, 200)
 
 
 if __name__ == "__main__":

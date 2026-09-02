@@ -18,15 +18,14 @@ Once the plugin is listed in the Cursor Marketplace:
 
 1. Open Grok Bot and select **Plugins** in the sidebar.
 2. Search for **All-In Bot** and select **Add**.
-3. Enter the private beta access token when prompted.
-4. Confirm that All-In Bot appears under **Installed**.
-5. Mention `@All-In Bot` in a conversation, or ask an All-In archive question directly.
+3. Confirm that All-In Bot appears under **Installed**.
+4. Mention `@All-In Bot` in a conversation, or ask an All-In archive question directly.
 
 Example:
 
 > Using All-In Bot, compare how the podcast discussed tariffs before and after 2024. Cite the speakers, episodes, dates, and timestamps.
 
-The hosted MCP endpoint is `https://all-in-grok-production.up.railway.app/mcp`. It requires a bearer token. Secret values are configured through Cursor and are never stored in this repository.
+The hosted MCP endpoint is `https://all-in-grok-production.up.railway.app/mcp`. It is public and read-only, so listeners do not need an API key or access token.
 
 ## Capabilities
 
@@ -53,7 +52,7 @@ Questions sent through the plugin are transmitted to the hosted MCP service so i
 
 ## Local development
 
-The public repository contains the plugin and server code only. It does not contain the purchased transcript archive, generated SQLite index, deployment artifact, or access token.
+The public repository contains the plugin and server code only. It does not contain the purchased transcript archive, generated SQLite index, or deployment artifact.
 
 Build a local index from an authorized normalized corpus:
 
@@ -77,8 +76,8 @@ python3 -m unittest discover -s tests -v
 
 `railway_app.py` provides a FastAPI entrypoint for Railway and Render. The Docker image expects `data/all-in-grok.sqlite3.gz`, expands the read-only index into ephemeral storage, and exposes `/mcp` and `/healthz`. No persistent volume is required.
 
-The archive artifact is intentionally excluded from Git. Only deploy it to infrastructure where you are authorized to store and process it. Set `ALL_IN_GROK_TOKEN` on the hosting service before creating a public domain.
+The archive artifact is intentionally excluded from Git. Only deploy it to infrastructure where you are authorized to store and process it.
 
 ## Rights and licensing
 
-The plugin source code is MIT licensed. The transcript corpus, generated index, podcast audio, names, marks, and other third-party materials are not covered by that license. Access to the hosted archive is limited while distribution rights are reviewed.
+The plugin source code is MIT licensed. The transcript corpus, generated index, podcast audio, names, marks, and other third-party materials are not covered by that license. The service exposes bounded search results and short supporting excerpts rather than transcript downloads.

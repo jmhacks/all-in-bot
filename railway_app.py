@@ -8,12 +8,12 @@ from typing import Any
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, Response
 
-from api.mcp import MAX_BODY_BYTES, authorized, get_archive, handle_payload, valid_origin
+from api.mcp import MAX_BODY_BYTES, get_archive, handle_payload, valid_origin
 
 
 app = FastAPI(
     title="All-In Bot MCP",
-    version="0.2.0",
+    version="0.3.0",
     docs_url=None,
     redoc_url=None,
     openapi_url=None,
@@ -56,8 +56,6 @@ def unsupported_mcp_stream() -> Response:
 async def mcp(request: Request) -> Response:
     if not valid_origin(request.headers.get("origin")):
         return no_store_json({"error": "Origin is not allowed"}, status_code=403)
-    if not authorized(request.headers.get("authorization")):
-        return no_store_json({"error": "Unauthorized"}, status_code=401)
     content_length = request.headers.get("content-length")
     if content_length:
         try:

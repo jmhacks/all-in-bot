@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+- Removed the private beta token requirement so anyone can install and use All-In Bot.
+- Kept the hosted transcript tools read-only with bounded request and excerpt sizes.
+
 ## 0.2.0
 
 - Renamed the public product to All-In Bot.

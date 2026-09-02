@@ -14,7 +14,7 @@ from typing import Any
 
 
 SERVER_NAME = "all-in-bot"
-SERVER_VERSION = "0.2.0"
+SERVER_VERSION = "0.3.0"
 DEFAULT_INDEX = Path(__file__).resolve().parents[1] / "data/all-in-grok.sqlite3"
 MAX_RESULTS = 12
 MAX_CONTEXT_TURNS = 3

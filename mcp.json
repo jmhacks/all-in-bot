@@ -1,10 +1,7 @@
 {
   "mcpServers": {
     "all-in-bot": {
-      "url": "https://all-in-grok-production.up.railway.app/mcp",
-      "headers": {
-        "Authorization": "Bearer ${ALL_IN_BOT_TOKEN}"
-      }
+      "url": "https://all-in-grok-production.up.railway.app/mcp"
     }
   }
 }

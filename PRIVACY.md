@@ -6,6 +6,6 @@ The application code does not intentionally persist question text, archive searc
 
 The service is hosted on Railway. Cursor and Railway may process or retain data according to their own policies. Do not include passwords, financial information, health information, or other sensitive personal information in archive questions.
 
-The public source repository excludes the transcript corpus, generated search index, deployment artifact, and access credentials.
+The public source repository excludes the transcript corpus, generated search index, and deployment artifact. All-In Bot is a public, read-only research service and does not require user credentials.
 
 For privacy questions, open an issue in the public GitHub repository.

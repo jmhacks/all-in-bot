@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import gzip
-import hmac
 import json
 import os
 import shutil
@@ -39,15 +38,6 @@ def valid_origin(origin: str | None) -> bool:
         or hostname.endswith(".cursor.com")
         or hostname in {"localhost", "127.0.0.1"}
     )
-
-
-def authorized(header: str | None) -> bool:
-    expected = os.environ.get("ALL_IN_GROK_TOKEN")
-    if not expected:
-        return True
-    if not header or not header.startswith("Bearer "):
-        return False
-    return hmac.compare_digest(header.removeprefix("Bearer "), expected)
 
 
 def prepare_runtime_index() -> Path:
@@ -110,9 +100,6 @@ class handler(BaseHTTPRequestHandler):
         if not valid_origin(self.headers.get("Origin")):
             self._send_json(403, {"error": "Origin is not allowed"})
             return
-        if not authorized(self.headers.get("Authorization")):
-            self._send_json(401, {"error": "Unauthorized"})
-            return
         try:
             content_length = int(self.headers.get("Content-Length") or "0")
         except ValueError:
@@ -143,4 +130,4 @@ class handler(BaseHTTPRequestHandler):
         self._send_json(200, response)
 
 
-__all__ = ["authorized", "get_archive", "handle_payload", "handler", "prepare_runtime_index", "valid_origin"]
+__all__ = ["get_archive", "handle_payload", "handler", "prepare_runtime_index", "valid_origin"]

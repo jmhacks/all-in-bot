@@ -1,7 +1,7 @@
 {
   "name": "all-in-bot",
   "displayName": "All-In Bot",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "minClientVersions": {
     "cursor": "3.13.0"
   },
@@ -30,18 +30,5 @@
   "skills": "./skills/",
   "agents": "./agents/",
   "commands": "./commands/",
-  "mcpServers": "./mcp.json",
-  "variables": {
-    "type": "object",
-    "properties": {
-      "ALL_IN_BOT_TOKEN": {
-        "type": "string",
-        "title": "All-In Bot access token",
-        "description": "Private beta token for the hosted transcript research service."
-      }
-    },
-    "required": [
-      "ALL_IN_BOT_TOKEN"
-    ]
-  }
+  "mcpServers": "./mcp.json"
 }

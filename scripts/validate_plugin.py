@@ -64,18 +64,13 @@ def main() -> None:
         server = mcp["mcpServers"]["all-in-bot"]
         if server.get("url") != "https://all-in-grok-production.up.railway.app/mcp":
             errors.append("all-in-bot MCP server must use the production Railway endpoint")
-        authorization = server.get("headers", {}).get("Authorization")
-        if authorization != "Bearer ${ALL_IN_BOT_TOKEN}":
-            errors.append("all-in-bot MCP server must use the declared token variable")
+        if server.get("headers"):
+            errors.append("public all-in-bot MCP server must not require install-time headers")
     except (OSError, KeyError, json.JSONDecodeError) as exc:
         errors.append(f"invalid mcp.json: {exc}")
 
-    variables = manifest.get("variables", {}) if isinstance(manifest, dict) else {}
-    properties = variables.get("properties", {}) if isinstance(variables, dict) else {}
-    if "ALL_IN_BOT_TOKEN" not in properties:
-        errors.append("manifest must declare ALL_IN_BOT_TOKEN")
-    if "ALL_IN_BOT_TOKEN" not in variables.get("required", []):
-        errors.append("manifest must require ALL_IN_BOT_TOKEN")
+    if manifest.get("variables"):
+        errors.append("public all-in-bot plugin must not require install-time variables")
 
     component_paths = [
         *ROOT.glob("skills/*/SKILL.md"),
