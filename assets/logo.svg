@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">All-In Bot</title>
+  <desc id="desc">A dark speech bubble with four colored transcript lines.</desc>
+  <rect width="256" height="256" rx="56" fill="#111827"/>
+  <path d="M52 58h152a20 20 0 0 1 20 20v82a20 20 0 0 1-20 20h-78l-42 34 8-34H52a20 20 0 0 1-20-20V78a20 20 0 0 1 20-20Z" fill="#f8fafc"/>
+  <rect x="62" y="88" width="86" height="12" rx="6" fill="#3b82f6"/>
+  <rect x="62" y="113" width="126" height="12" rx="6" fill="#ef4444"/>
+  <rect x="62" y="138" width="102" height="12" rx="6" fill="#22c55e"/>
+  <circle cx="198" cy="94" r="7" fill="#f59e0b"/>
+</svg>

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/mcp.py": {
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": "data/all-in-grok.sqlite3.gz"
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/mcp",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}

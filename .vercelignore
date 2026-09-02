@@ -1,0 +1,12 @@
+.git
+.cursor-plugin
+.DS_Store
+__pycache__
+**/__pycache__
+**/*.pyc
+data/*.sqlite3
+tests
+agents
+commands
+skills
+assets

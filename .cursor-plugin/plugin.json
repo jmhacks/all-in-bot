@@ -1,0 +1,47 @@
+{
+  "name": "all-in-bot",
+  "displayName": "All-In Bot",
+  "version": "0.2.0",
+  "minClientVersions": {
+    "cursor": "3.13.0"
+  },
+  "description": "Unofficial, evidence-linked research across the speaker-labeled All-In Podcast transcript archive.",
+  "author": {
+    "name": "Jeongmin C."
+  },
+  "homepage": "https://all-in-field-guide.jeongminc.chatgpt.site/",
+  "repository": "https://github.com/jmhacks/all-in-bot",
+  "license": "MIT",
+  "logo": "assets/logo.svg",
+  "keywords": [
+    "all-in-podcast",
+    "transcripts",
+    "research",
+    "citations",
+    "mcp"
+  ],
+  "category": "productivity",
+  "tags": [
+    "podcast",
+    "knowledge-base",
+    "search",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "commands": "./commands/",
+  "mcpServers": "./mcp.json",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "ALL_IN_BOT_TOKEN": {
+        "type": "string",
+        "title": "All-In Bot access token",
+        "description": "Private beta token for the hosted transcript research service."
+      }
+    },
+    "required": [
+      "ALL_IN_BOT_TOKEN"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+data/*.sqlite3
+data/*.sqlite3-*
+data/*.sqlite3.gz
+__pycache__/
+*.pyc
+.DS_Store
+.vercel/
+.venv/
+.secrets/

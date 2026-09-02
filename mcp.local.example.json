@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "all-in-bot": {
+      "command": "python3",
+      "args": [
+        "${CURSOR_PLUGIN_ROOT}/server/all_in_mcp.py"
+      ],
+      "env": {
+        "ALL_IN_BOT_INDEX": "${CURSOR_PLUGIN_ROOT}/data/all-in-grok.sqlite3"
+      }
+    }
+  }
+}
